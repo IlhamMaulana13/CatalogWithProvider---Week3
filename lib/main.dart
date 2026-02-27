@@ -10,3 +10,14 @@ void main() {
   );
 }
 
+class CartModel extends ChangeNotifier {
+  final list<String> _items = [];
+
+  List<String> get items => _items;
+
+  void add(String itemName) {
+    _items.add(itemName);
+    notifyListeners();
+  }
+}
+
