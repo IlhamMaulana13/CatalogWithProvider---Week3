@@ -23,6 +23,14 @@ class CartModel extends ChangeNotifier {
   void removeAll() {
     _items.clear();
     notifyListeners();
-  }
+  } 
 }
 
+class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp();
+  }
+}
