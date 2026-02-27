@@ -62,3 +62,14 @@ class MyCatalog extends StatelessWidget{
     );
   }
 }
+
+class AddButton extends StatelessWidget{
+  final String item;
+  const AddButton({required this.item, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    throw UnimplementedError();
+  }
+}
