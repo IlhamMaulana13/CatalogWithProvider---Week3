@@ -47,6 +47,18 @@ class MyCatalog extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    final products = ['Nasgor Goreng', 'Sate Ayam Madura', 'Kentang Musthofa', 'Ayam Bakar', 'Roti Jala Maklimah Biadab'];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Katalog Makanan'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, '/cart'),
+            icon: const Icon(Icons.shopping_cart),
+            ),
+        ],
+      ),
+    );
   }
 }
