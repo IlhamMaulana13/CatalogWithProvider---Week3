@@ -87,3 +87,13 @@ class AddButton extends StatelessWidget {
     );
   }
 }
+
+class MyCart extends StatelessWidget {
+  const MyCart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
