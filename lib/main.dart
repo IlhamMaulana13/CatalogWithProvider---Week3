@@ -93,7 +93,23 @@ class MyCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    var cart = context.watch<CartModel>();
+
+    return Scaffold(
+            appBar: AppBar(
+              title: const Text("Keranjang Belanja"),
+            ),
+            body: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cart.items.length,
+                    itemBuilder: (context, index) => 
+                      ListTile(leading: const Icon(Icons.fastfood), title: Text(cart.items[index])),
+                  ),
+                ),
+              ],
+            )
+          );
   }
 }
