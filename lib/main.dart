@@ -5,7 +5,6 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => CartModel(),
       child: const MyApp(),
-
     ),
   );
 }
@@ -23,10 +22,10 @@ class CartModel extends ChangeNotifier {
   void removeAll() {
     _items.clear();
     notifyListeners();
-  } 
+  }
 }
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
@@ -42,12 +41,18 @@ class MyApp extends StatelessWidget{
   }
 }
 
-class MyCatalog extends StatelessWidget{
+class MyCatalog extends StatelessWidget {
   const MyCatalog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final products = ['Nasgor Goreng', 'Sate Ayam Madura', 'Kentang Musthofa', 'Ayam Bakar', 'Roti Jala Maklimah Biadab'];
+    final products = [
+      'Nasgor Goreng',
+      'Sate Ayam Madura',
+      'Kentang Musthofa',
+      'Ayam Bakar',
+      'Roti Jala Maklimah Biadab',
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -56,20 +61,29 @@ class MyCatalog extends StatelessWidget{
           IconButton(
             onPressed: () => Navigator.pushNamed(context, '/cart'),
             icon: const Icon(Icons.shopping_cart),
-            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class AddButton extends StatelessWidget{
+class AddButton extends StatelessWidget {
   final String item;
   const AddButton({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isInCart = context.select<CartModel, bool>((cart) => cart.items.contains(item));
 
-    throw UnimplementedError();
+    return TextButton(
+      onPressed: isInCart
+      ? null
+      : () {
+        context.read<CartModel>().add(item);  
+
+      },
+      child: isInCart ? const Icon(Icons.check, color: Colors.green) : const Text('TAMBAH'),
+    );
   }
 }
