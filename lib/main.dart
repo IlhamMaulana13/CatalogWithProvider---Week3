@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -64,6 +65,16 @@ class MyCatalog extends StatelessWidget {
           ),
         ],
       ),
+      body: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final item = products[index];
+          return ListTile(
+            title: Text(item),
+            trailing: AddButton(item: item),
+          );
+        },
+      ),
     );
   }
 }
@@ -74,16 +85,19 @@ class AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isInCart = context.select<CartModel, bool>((cart) => cart.items.contains(item));
+    final isInCart = context.select<CartModel, bool>(
+      (cart) => cart.items.contains(item),
+    );
 
     return TextButton(
       onPressed: isInCart
-      ? null
-      : () {
-        context.read<CartModel>().add(item);  
-
-      },
-      child: isInCart ? const Icon(Icons.check, color: Colors.green) : const Text('TAMBAH'),
+          ? null
+          : () {
+              context.read<CartModel>().add(item);
+            },
+      child: isInCart
+          ? const Icon(Icons.check, color: Colors.green)
+          : const Text('TAMBAH'),
     );
   }
 }
@@ -96,20 +110,32 @@ class MyCart extends StatelessWidget {
     var cart = context.watch<CartModel>();
 
     return Scaffold(
-            appBar: AppBar(
-              title: const Text("Keranjang Belanja"),
+      appBar: AppBar(title: const Text("Keranjang Belanja")),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart.items.length,
+              itemBuilder: (context, index) => ListTile(
+                leading: const Icon(Icons.fastfood),
+                title: Text(cart.items[index]),
+              ),
             ),
-            body: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cart.items.length,
-                    itemBuilder: (context, index) => 
-                      ListTile(leading: const Icon(Icons.fastfood), title: Text(cart.items[index])),
-                  ),
-                ),
-              ],
-            )
-          );
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              onPressed: () => cart.removeAll(),
+              child: const Text(
+                'Hapus Keranjang',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
